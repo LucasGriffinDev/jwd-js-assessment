@@ -23,6 +23,9 @@ window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
   const submitButton = document.querySelector('#btnSubmit');
   const resetButton = document.querySelector('#btnReset');
+  const countdown = document.querySelector('#time');
+
+  const countdownTime = 60; // 3 minutes in seconds
 
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
@@ -32,7 +35,7 @@ window.addEventListener('DOMContentLoaded', () => {
     calculateScore();
   });
   resetButton.addEventListener('click', function (e) {
-    hideQuiz();
+    resetQuiz();
   });
 
   // quizArray QUESTIONS & ANSWERS
@@ -71,11 +74,14 @@ window.addEventListener('DOMContentLoaded', () => {
     },
   ];
 
+  const endQuiz = () => {
+    const score = calculateScore();
+    alert(`Time's up! Your score: ${score}/${quizArray.length}`);
+  };
+
   // function to Display the quiz questions and answers from the object
-  const hideQuiz = () => {
-    const quizWrap = document.querySelector('#quizWrap');
-    let quizDisplay = '';
-    quizWrap.style.display = 'none';
+  const resetQuiz = () => {
+    location.reload();
   };
   const displayQuiz = () => {
     const quizWrap = document.querySelector('#quizWrap');
@@ -123,6 +129,29 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
   };
+
+  const startCountdown = () => {
+    let time = countdownTime;
+    const timer = setInterval(() => {
+      if (time < 1) {
+        clearInterval(timer);
+        endQuiz();
+      } else {
+        const minutes = Math.floor(time / 60);
+        const seconds = time % 60;
+        countdown.textContent = `${minutes}:${seconds
+          .toString()
+          .padStart(2, '0')}`;
+        time--;
+      }
+    }, 1000);
+  };
+
+  start.addEventListener('click', function (e) {
+    document.querySelector('#quizBlock').style.display = 'block';
+    start.style.display = 'none';
+    startCountdown(); // start the countdown timer
+  });
 
   // call the displayQuiz function
   displayQuiz();
