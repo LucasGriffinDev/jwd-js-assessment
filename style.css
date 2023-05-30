@@ -1,5 +1,7 @@
 body {
-  background-color: #449c24;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(216, 216, 216, 0.5));
+  height: 100vh;
+
   color: rgb(68, 68, 68);
 }
 
