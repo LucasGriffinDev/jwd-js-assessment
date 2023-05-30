@@ -24,8 +24,10 @@ window.addEventListener('DOMContentLoaded', () => {
   const submitButton = document.querySelector('#btnSubmit');
   const resetButton = document.querySelector('#btnReset');
   const countdown = document.querySelector('#time');
+  const result = document.querySelector('#result');
 
   const countdownTime = 60; // 3 minutes in seconds
+  let timer;
 
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
@@ -87,53 +89,62 @@ window.addEventListener('DOMContentLoaded', () => {
     const quizWrap = document.querySelector('#quizWrap');
     let quizDisplay = '';
     quizArray.map((quizItem, index) => {
-      quizDisplay += `<ul class="list-group">
-                   Q - ${quizItem.q}
-                    <li class="list-group-item mt-2" id="li_${index}_0"><input type="radio" name="radio${index}" id="radio_${index}_0"> ${quizItem.o[0]}</li>
-                    <li class="list-group-item" id="li_${index}_1"><input type="radio" name="radio${index}" id="radio_${index}_1"> ${quizItem.o[1]}</li>
-                    <li class="list-group-item"  id="li_${index}_2"><input type="radio" name="radio${index}" id="radio_${index}_2"> ${quizItem.o[2]}</li>
-                    <li class="list-group-item"  id="li_${index}_3"><input type="radio" name="radio${index}" id="radio_${index}_3"> ${quizItem.o[3]}</li>
-                    </ul>
-                    <div>&nbsp;</div>`;
-      quizWrap.innerHTML = quizDisplay;
+      quizDisplay += `
+      <div class="card mb-3">
+        <div class="card-header">Q - ${index + 1}: ${quizItem.q}</div>
+        <div class="card-body">
+    `;
+      quizItem.o.forEach((option, i) => {
+        quizDisplay += `
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="radio${index}" id="radio_${index}_${i}">
+          <label class="form-check-label" for="radio_${index}_${i}">
+            ${option}
+          </label>
+        </div>
+      `;
+      });
+      quizDisplay += `</div></div>`;
     });
+    quizWrap.innerHTML = quizDisplay;
   };
 
   // Calculate the score
   const calculateScore = () => {
     let score = 0;
-    quizArray.map((quizItem, index) => {
-      for (let i = 0; i < 4; i++) {
-        //highlight the li if it is the correct answer
-        let li = `li_${index}_${i}`;
+    quizArray.forEach((quizItem, index) => {
+      let chosenOptionIndex = null;
+      for (let i = 0; i < quizItem.o.length; i++) {
         let r = `radio_${index}_${i}`;
-        liElement = document.querySelector('#' + li);
         radioElement = document.querySelector('#' + r);
-
-        if (quizItem.a == i) {
-          //change background color of li element here
-          liElement.style.backgroundColor = 'green';
-        }
-        // if radio butten checked by the user, is not the correct anwer (quizItems.a) then highlight the li element in red
-        if (radioElement.checked && quizItem.a != i) {
-          //change background color of li element here
-          liElement.style.backgroundColor = 'red';
-        }
-
         if (radioElement.checked) {
-          // code for task 1 goes here
-          if (quizItem.a == i) {
-            score++;
-          }
+          chosenOptionIndex = i;
+          break; // Exit the loop once we find a checked radio button.
+        }
+      }
+      if (chosenOptionIndex !== null) {
+        const correctAnswerElement = document.querySelector(
+          `#radio_${index}_${quizItem.a}`
+        ).parentElement;
+        if (chosenOptionIndex === quizItem.a) {
+          score++;
+          correctAnswerElement.style.backgroundColor = 'green';
+        } else {
+          const chosenOptionElement = document.querySelector(
+            `#radio_${index}_${chosenOptionIndex}`
+          ).parentElement;
+          chosenOptionElement.style.backgroundColor = 'red';
+          correctAnswerElement.style.backgroundColor = 'green';
         }
       }
     });
     alert(`Your score: ${score}/${quizArray.length}`);
+    result.innerHTML = `Your score: ${score}/${quizArray.length}`;
   };
 
   const startCountdown = () => {
     let time = countdownTime;
-    const timer = setInterval(() => {
+    timer = setInterval(() => {
       if (time < 1) {
         clearInterval(timer);
         endQuiz();
