@@ -1,6 +1,6 @@
 # JS Assessment
 
-[Demo Link](www.google.com)
+[Demo Link](https://lucasgriffindev.github.io/jwd-js-assessment/)
 
 ## Quiz Application
 
