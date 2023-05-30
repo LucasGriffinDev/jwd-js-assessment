@@ -7,8 +7,9 @@ The JavaScript code in index.js is unfinished. You will need to study it to figu
 Complete the following tasks:
 
 1. Calculate the score as the total of the number of correct answers
-
+   done
 2. Add an Event listener for the submit button, which will display the score and highlight the correct answers when the button is clicked
+   done
 
 3. Add 2 more questions to the app (each question must have 4 options)
 

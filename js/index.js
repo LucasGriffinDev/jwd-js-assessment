@@ -21,10 +21,20 @@
 
 window.addEventListener('DOMContentLoaded', () => {
   const start = document.querySelector('#start');
+  const submitButton = document.querySelector('#btnSubmit');
+  const resetButton = document.querySelector('#btnReset');
+
   start.addEventListener('click', function (e) {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
   });
+  submitButton.addEventListener('click', function (e) {
+    calculateScore();
+  });
+  resetButton.addEventListener('click', function (e) {
+    hideQuiz();
+  });
+
   // quizArray QUESTIONS & ANSWERS
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
   // Basic ideas from https://code-boxx.com/simple-javascript-quiz/
@@ -40,13 +50,33 @@ window.addEventListener('DOMContentLoaded', () => {
       a: 3,
     },
     {
-      q: 'What is the capital of Australia',
+      q: 'What is the capital of Australia?',
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
+    },
+    {
+      q: 'What is the capital of Finland?',
+      o: ['Helsinki', 'Edinburgh', 'Lima', 'Perth'],
+      a: 0,
+    },
+    {
+      q: 'What is the smallest planet in our solar system?',
+      o: [
+        'Frigus ',
+        'Omicron Persei 8',
+        'Omicron Ceti III',
+        'Dwarf Planet Ceres',
+      ],
+      a: 3,
     },
   ];
 
   // function to Display the quiz questions and answers from the object
+  const hideQuiz = () => {
+    const quizWrap = document.querySelector('#quizWrap');
+    let quizDisplay = '';
+    quizWrap.style.display = 'none';
+  };
   const displayQuiz = () => {
     const quizWrap = document.querySelector('#quizWrap');
     let quizDisplay = '';
@@ -76,10 +106,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = 'green';
         }
 
         if (radioElement.checked) {
           // code for task 1 goes here
+          if (quizItem.a == i) {
+            score++;
+          }
         }
       }
     });
