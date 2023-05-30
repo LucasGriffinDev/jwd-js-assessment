@@ -13,6 +13,8 @@ Complete the following tasks:
 
 3. Add 2 more questions to the app (each question must have 4 options)
 
+done
+
 4. Reload the page when the reset button is clicked (hint: search window.location)
 
 5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers

@@ -108,6 +108,11 @@ window.addEventListener('DOMContentLoaded', () => {
           //change background color of li element here
           liElement.style.backgroundColor = 'green';
         }
+        // if radio butten checked by the user, is not the correct anwer (quizItems.a) then highlight the li element in red
+        if (radioElement.checked && quizItem.a != i) {
+          //change background color of li element here
+          liElement.style.backgroundColor = 'red';
+        }
 
         if (radioElement.checked) {
           // code for task 1 goes here
