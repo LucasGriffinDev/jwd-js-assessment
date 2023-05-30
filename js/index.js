@@ -128,6 +128,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
+    alert(`Your score: ${score}/${quizArray.length}`);
   };
 
   const startCountdown = () => {
