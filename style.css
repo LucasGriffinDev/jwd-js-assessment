@@ -1,0 +1,12 @@
+body {
+  background-color: #449c24;
+  color: rgb(68, 68, 68);
+}
+
+.bubble {
+  border: 1px solid #ccc;
+  padding: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  border-radius: 5px;
+  display: inline-block;
+}
